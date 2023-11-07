@@ -3,25 +3,32 @@ import Link from "next/link";
 import React from "react";
 import { FcGoogle } from 'react-icons/fc';
 import { useForm } from "react-hook-form";
+import { useContext } from "react";
+import { UserContext } from "../contexts/usuario";
+import { useRouter } from "next/navigation";
 
 
 
 export default function Login () {
 
   const {register, handleSubmit} = useForm();
+  const {changeId, changeName} = useContext(UserContext)
+
+  const router = useRouter()
 
   async function verificaLogin(data) {
-     console.log(data);
       const login = `username=${data.username}&password=${data.senha}`
-     alert(login)
       const response = await fetch(`http://localhost:3004/usuarios?${login}`)
-    const cliente = await response.json()
-    console.log(cliente);
-    if(cliente.length == 0){
-      alert("Usuario não existe")
-     }else{
-      alert("ok!!!")
-     }  
+    const user = await response.json()
+    if(user.length == 0){
+      alert('Usuário ou senha incorretos')
+    }else{
+      changeId(user[0].id)
+      console.log(user[0].username);
+      console.log(user[0].id);
+      changeName(user[0].username)
+      router.push('/')
+    }  
    }
 
 

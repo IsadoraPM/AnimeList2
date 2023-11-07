@@ -6,6 +6,8 @@ import AnimeList from "../components/AnimeList";
 import Pesq from "../components/Pesq";
 export default function Listing() {
   const [animes, setAnimes] = useState([]);
+  const [generos, setGeneros] = useState([]);
+
   const router = useRouter();
 
   //const router = useRouter()
@@ -22,7 +24,7 @@ export default function Listing() {
     async function getGeneros() {
       const response = await fetch("http://localhost:3004/generos");
       const dados = await response.json();
-      getGeneros(dados);
+      setGeneros(dados);
     }
     getGeneros();
   }, []);

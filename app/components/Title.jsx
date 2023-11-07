@@ -1,11 +1,13 @@
 'use client'
 import Link from "next/link";
-import {singIn, useSession} from 'next-auth/react'
 
+import { UserContext } from "../contexts/usuario";
+import { useContext } from "react";
 
 
 
 export default function Title({ children }) {
+  const userName = useContext(UserContext)
   return (
     <body className="pagina-especifica">
       <header className="flex justify-between items-center bg-fundo py-2 px-6">
@@ -37,17 +39,15 @@ export default function Title({ children }) {
           >
             <i className="bi bi-buildings"></i>
           </Link>
-          <Link
-            href="/login"
-            className="text-gray-200 text-2xl hover:text-laranja ml-4"
-          >
-            <i className="bi bi-person-circle"></i>
-          </Link>
-
-          <button className="bottom-3"
-          onClick={() => singIn()}>
-            login
-          </button>
+          <div className="flex flex-col items-center ml-8">
+            <Link href='/login'>
+            <i className="bi bi-person-circle text-gray-200 text-2xl pt-2"></i>
+            </Link>
+            <p className="text-sm text-gray-200">
+              {userName.userName ? userName.userName : 'Login'}
+            </p>
+            </div>
+            
         </div>
       </header>
     </body>

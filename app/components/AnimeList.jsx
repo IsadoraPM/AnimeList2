@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Swal from 'sweetalert2';
+import { UserContext } from '../contexts/usuario';
 
 export default function AnimeList(props) {
     function deleteAnimes (id){
@@ -24,6 +25,7 @@ export default function AnimeList(props) {
 
     }
 
+    const { userId } = useContext(UserContext)
     return (
         <tr className="bg-gelo hover:bg-cinza200 transition-all ">
             <td className="py-3 px-4">
@@ -46,16 +48,24 @@ export default function AnimeList(props) {
             <td className="py-3 px-4">
                 <div className="text-gray-900">{props.anime.episodios}</div>
             </td>
+            {userId ? (
+                <td className="py-3 px-4">
+                    <div className="text-gray-900">
+                        {props.anime.nota}
+                        <i className="bi bi-balloon-heart cursor-pointer" onClick={props.alterNote}></i>
+                    </div>
+                </td>
+            ) : (
+                <td className="py-3 px-4">
+                    <div className="text-gray-900">
+                        Somente usuários logados podem ver a nota
+                    </div>
+                </td>
+            )}
             <td className="py-3 px-4">
-           
-                <div className="text-gray-900">{props.anime.nota}
-                <i className="bi bi-balloon-heart cursor-pointer" onClick={props.alterNote}></i> </div>
-            </td>
-            <td className="py-3 px-4">
-          <i className="bi bi-pencil-square hover:bg-laranja text-gray-900 mr-2 cursor-pointer" onClick={props.alter} title='alter'></i>
-          <i className="bi bi-calendar2-x hover:bg-laranja text-gray-900 cursor-pointer mr-2" onClick={()=>deleteAnimes(props.anime.id)}
-          title='Delete'></i>
-          <i className="bi bi-star hover:bg-laranja text-gray-900 cursor-pointer" ></i>
+                <i className="bi bi-pencil-square hover:bg-laranja text-gray-900 mr-2 cursor-pointer" onClick={props.alter} title='alter'></i>
+                <i className="bi bi-calendar2-x hover:bg-laranja text-gray-900 cursor-pointer mr-2" onClick={() => deleteAnimes(props.anime.id)} title='Delete'></i>
+                <i className="bi bi-star hover:bg-laranja text-gray-900 cursor-pointer"></i>
             </td>
         </tr>
     );

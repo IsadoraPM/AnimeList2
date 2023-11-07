@@ -1,6 +1,7 @@
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import Title from "./components/Title";
 import "./globals.css";
+import UserProvider from './contexts/usuario';
 
 export const metadata = {
   title: "AnimeCom",
@@ -13,11 +14,10 @@ export default function RootLayout({ children }) {
     <html lang="pt-br">
  
       <body>
-        <div>
-        <Title />
-        {children}
-        </div>
-      
+        <UserProvider>
+          <Title />
+          {children}
+        </UserProvider>
       </body>
       </html>
   );
