@@ -1,25 +1,20 @@
 'use client'
 import Link from "next/link";
 import React from "react";
+import { FcGoogle } from 'react-icons/fc';
 import { useForm } from "react-hook-form";
 
-const Login = () => {
-  const { register, handleSubmit } = useForm()
+
+
+export default function Login () {
+
+  const {register, handleSubmit} = useForm();
 
   async function verificaLogin(data) {
-        const login = `email=${data.email}&senha=${data.senha}`
-    const response = await fetch(`http://localhost:3004/clientes?${login}`)
-    const cliente = await response.json()
-    if (cliente.length == 0) {
-      alert("Não está cadastrado")
-    } else {
-      // alert("Ok!")
-      mudaId(cliente[0].id)
-      mudaNome(cliente[0].nome)
-      localStorage.setItem("cliente_logado", JSON.stringify({id: cliente[0].id, nome: cliente[0].nome}))
-      router.push("/")
-    }
-  }
+     console.log(data);
+   }
+
+
 
   return (
     <div className="min-h-screen flex flex-col items-center  bg-fundo2 mt-20">
@@ -31,13 +26,13 @@ const Login = () => {
               htmlFor="nome"
               className="block text-gray-800 text-sm font-bold mb-2"
             >
-              Nome
+              Username
             </label>
             <input
               type="text"
               id="nome"
               className="border rounded w-full py-2 px-3 text-orange-500"
-              required
+              required {...register("username")}
             />
           </div>
           <div className="mb-4">
@@ -51,22 +46,26 @@ const Login = () => {
               type="password"
               id="senha"
               className="border rounded w-full py-2 px-3 text-orange-500"
-              required
+              required {...register("senha")}
             />
           </div>
           <button
             type="submit"
-            className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded mr-3">
-
-            <Link href="/" onSubmit={handleSubmit(verificaLogin)} >Login</Link>
+            className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded mr-8"
+          >
+            <Link href="/login">Login</Link>
           </button>
           <a href="#" className="text-orange-500 hover:underline">
             Esqueci minha senha
           </a>
+          <p className="flex justify-center pt-4 text-orange-700 hover:text-orange-400"><Link href="/registerUser">Cadastre-se</Link></p>
         </form>
+        <div className="flex justify-center pt-4 cursor-pointer" >
+        <FcGoogle
+        size={35}
+        />
+        </div>
       </div>
     </div>
   );
 };
-
-export default Login;

@@ -1,5 +1,5 @@
 'use client'
-import 'bootstrap-icons/font/bootstrap-icons.css';
+
 import { useEffect, useState } from "react"
 import ItemAnime from './components/ItemAnime';
 
