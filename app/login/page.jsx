@@ -12,6 +12,16 @@ export default function Login () {
 
   async function verificaLogin(data) {
      console.log(data);
+      const login = `username=${data.username}&password=${data.senha}`
+     alert(login)
+      const response = await fetch(`http://localhost:3004/usuarios?${login}`)
+    const cliente = await response.json()
+    console.log(cliente);
+    if(cliente.length == 0){
+      alert("Usuario não existe")
+     }else{
+      alert("ok!!!")
+     }  
    }
 
 

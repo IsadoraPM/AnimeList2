@@ -1,4 +1,4 @@
-
+import 'bootstrap-icons/font/bootstrap-icons.css';
 import Title from "./components/Title";
 import "./globals.css";
 
