@@ -12,7 +12,7 @@ import { useRouter } from "next/navigation";
 export default function Login () {
 
   const {register, handleSubmit} = useForm();
-  const {changeId, changeName} = useContext(UserContext)
+  const {changeId, changeName,changeAdmin} = useContext(UserContext)
 
   const router = useRouter()
 
@@ -27,6 +27,9 @@ export default function Login () {
       console.log(user[0].username);
       console.log(user[0].id);
       changeName(user[0].username)
+      changeAdmin(user[0].isAdmin)
+      console.log(user[0].isAdmin);
+
       router.push('/')
     }  
    }

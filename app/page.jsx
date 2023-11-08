@@ -17,11 +17,7 @@ export default function Home() {
   }, [])
   const animesReversos = [...animes].reverse();
 
-  const listaAnimes = animes.map(anime => (
-    <ItemAnime key={anime.id}
-      anime={anime}
-    />
-  ))
+
 
   return (
 
