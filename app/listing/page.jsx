@@ -59,6 +59,7 @@ export default function Listing() {
     }
     getAnimes();
   }
+  
 
   const listAnime = animes.map((anime) => (
     <AnimeList
