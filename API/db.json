@@ -154,6 +154,18 @@
       "animeId": 4,
       "epEscolhido": "56",
       "id": 10
+    },
+    {
+      "usuarioId": 1,
+      "animeId": 4,
+      "epEscolhido": "75",
+      "id": 11
+    },
+    {
+      "usuarioId": 1,
+      "animeId": 6,
+      "epEscolhido": "42",
+      "id": 12
     }
   ]
 }

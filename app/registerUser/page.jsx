@@ -16,7 +16,6 @@ export default function Cadastro() {
       console.log("Cadastro bem-sucedido!");
       
     } else {
-      // A senha não coincide, definimos o estado 'senhaIncorreta' como verdadeiro
       setSenhaIncorreta(true);
     }
   };
