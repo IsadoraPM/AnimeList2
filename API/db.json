@@ -32,6 +32,16 @@
       "capa": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAoGBxQUExYUFBQXFxYYGR0cGRcZGRwZHBoYGBgZIBgcHBgZHyoiGRwnHxkZIzQkKSsuMTExGCE2OzYwOiowMS4BCwsLDw4PHRERHTUnIigwMDIuLjA1MjAwMjAwMDAwMjgwMjAwMDAuMjAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMP/AABEIAMIBBAMBIgACEQEDEQH/xAAbAAACAwEBAQAAAAAAAAAAAAAEBQADBgIBB//EAEYQAAIBAgQDBQQHBQUIAgMAAAECEQADBBIhMQVBURMiYXGBBjKRoRQjQlKxwdEzYnLh8BUWgpKyByRDU3Oiw/Fj0hezwv/EABkBAAMBAQEAAAAAAAAAAAAAAAECAwQABf/EADERAAICAQMDAgQGAgIDAAAAAAECABEDEiExBEFRE2EicZGhBRQygdHwUsFCsRUj8f/aAAwDAQACEQMRAD8A+l9m/SvbgaNRR4adxQ2MstHdPpXmNhoWpuag9neV8JaFIHWisTiSomlmGVgrDnRjYBmTvvyo48radKjgTnVdVmCY1+0GdeW5oNrQZMxEkUG2KY51Dm2isqHKFLMzZebAgKM67DrXOH4ibZe2wZipGqoTKt7pOUQDMj/DyrxeoIZtaj4u8scZA2hP9rm2hVR3joPClQutmk8taLfFW+8QjG9lMJlMgxoSNsuo150Me7eQXCzhgGgL3pkyAF5aUEctpU7bTlXbiNbfEL4Q3MsrQmI9rDCwsEb+NaLB8QtXEdNVCiWVlghTOscxodRO1Yq/ZCxcZctu5JGjSm2UNI5yfhW/KoxqtNYP/cRBqJscTZcGxgxCBuf2o0g9KMvIjd0kacjWY9muLDDqy3VdFJlCUOpP2dNj0BipxvjDO020uCDl9w/1+VbF6rGMYJIJiHG2rYbTRYjh4YCHyx0ry5YRE73fA1111rJYfjd4EqWIYsiCRqpa4gbQ6TlJj0orifFbq",
       "nota": "3",
       "id": 6
+    },
+    {
+      "titulo": "aaa",
+      "genero": "Comédia",
+      "temporadas": "2",
+      "episodios": "12",
+      "produtora": "Juans Production",
+      "capa": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAoHCBUWFRgWFRYYGBgYGhoaHBgaGhoaGhoaHCEhHBwcHBocIS4lHB4rHxgaJjgmKy8xNTU1HCQ7QDszPy40NTEBDAwMEA8QHxISHjQhIyE0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NP/AABEIAOEA4QMBIgACEQEDEQH/xAAcAAABBQEBAQAAAAAAAAAAAAAFAAIDBAYBBwj/xABEEAABAwEEBwUECQMDAgcAAAABAAIRAwQSITEFIkFRYXGBBiMyM5FyobHBBxNCUmLR4fDxFIKSFTSyU3MWJEN0orPD/8QAGQEAAwEBAQAAAAAAAAAAAAAAAAECAwQF/8QAIhEAAwABBQACAwEAAAAAAAAAAAECEQMSITFBEzIEIlFh/9oADAMBAAIRAxEAPwDxpJJJACSSSQAkkl1AHEl1JACSSVmxWc1HtYASXODcMTrEDASJMkYSgCOlQc511ol2wDEk7hGZWssfYm0PY0OYGuvOMnAQWsgOdGF2HTuJ5rW6B7M0qT21awDn07oxJa2/dzMnX54ZbcVo7dXc66QC/YGN25RAaMhtkgDecUsjwYyj2SslNt2oH1XRrOEsEycGAmQwb4JMZtxCuu0RZHm62lwMSIvZnAgTyxG/BF2aGq1CL1MjeQ4NaP8AEid2E/NXbVo17RFzDeIM4RkBMCPclkrCBrtC2ZoBFFgLQAHAX7oEgAgOcAc+OJO0rP6Q0PTBDvq2ODgZLc48WABBBw2n5rRUrO5rgYe3iBHGczCfpayvc37wMbGEGN41SM80siwZKlYLOGiaQMYYOxI3FpvENOGEeuwbpbsveJfTIbeMxrObj+IAku6D1wBr6iowgazTOEuNyOLcbvXiiNGi8C87aYc0ukcNYeHk6MckbmPCPK7ZYX0nXXtIxidhVZewW6zUqzQyrMTql8SHCRF+JBxzE",
+      "nota": "3",
+      "id": 7
     }
   ],
   "generos": [
@@ -82,6 +92,68 @@
       "email": "edecio@gmail.com",
       "password": "dede123",
       "isAdmin": "false"
+    }
+  ],
+  "favEp": [
+    {
+      "id": 1,
+      "usuarioId": 1,
+      "animeId": 4,
+      "epEscolhido": "2"
+    },
+    {
+      "usuarioId": 1,
+      "animeId": 3,
+      "epEscolhido": "45",
+      "id": 2
+    },
+    {
+      "usuarioId": null,
+      "animeId": null,
+      "epEscolhido": "",
+      "id": 3
+    },
+    {
+      "usuarioId": 4,
+      "animeId": 3,
+      "epEscolhido": "32",
+      "id": 4
+    },
+    {
+      "usuarioId": null,
+      "animeId": 4,
+      "epEscolhido": "32",
+      "id": 5
+    },
+    {
+      "usuarioId": null,
+      "animeId": 4,
+      "epEscolhido": "",
+      "id": 6
+    },
+    {
+      "usuarioId": 2,
+      "animeId": 4,
+      "epEscolhido": "54",
+      "id": 7
+    },
+    {
+      "usuarioId": 2,
+      "animeId": 4,
+      "epEscolhido": "54",
+      "id": 8
+    },
+    {
+      "usuarioId": 2,
+      "animeId": 4,
+      "epEscolhido": "54",
+      "id": 9
+    },
+    {
+      "usuarioId": 2,
+      "animeId": 4,
+      "epEscolhido": "56",
+      "id": 10
     }
   ]
 }

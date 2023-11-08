@@ -11,22 +11,26 @@ import { useRouter } from "next/navigation";
 
 export default function Login () {
 
-  const {register, handleSubmit} = useForm();
-  const {changeId, changeName} = useContext(UserContext)
+  const {register, handleSubmit,} = useForm();
+  const {changeId, changeName, changeAdmin,changeStatus} = useContext(UserContext)
 
   const router = useRouter()
 
   async function verificaLogin(data) {
       const login = `username=${data.username}&password=${data.senha}`
       const response = await fetch(`http://localhost:3004/usuarios?${login}`)
-    const user = await response.json()
+      changeStatus("loading")
+      const user = await response.json()
     if(user.length == 0){
+      changeStatus("deslogado")
       alert('Usuário ou senha incorretos')
     }else{
+      changeStatus("logado")
       changeId(user[0].id)
       console.log(user[0].username);
       console.log(user[0].id);
       changeName(user[0].username)
+      //changeAdmin(user[0].admin)
       router.push('/')
     }  
    }

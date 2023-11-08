@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import Swal from 'sweetalert2';
 import { UserContext } from '../contexts/usuario';
+import { useRouter } from 'next/navigation';
 
 export default function AnimeList(props) {
     function deleteAnimes(id) {
@@ -23,6 +24,8 @@ export default function AnimeList(props) {
             }
         });
     }
+
+    const router = useRouter();
 
     const { userId } = useContext(UserContext);
 
@@ -56,13 +59,17 @@ export default function AnimeList(props) {
             <td className="py-3 px-4">
                 <div className="text-gray-900">{props.anime.episodios}</div>
             </td>
+
             {userId ? (
                 <td className="py-3 px-4">
                     <div className="text-gray-900">
                         {props.anime.nota}
                         <i className="bi bi-balloon-heart cursor-pointer" onClick={props.alterNote}></i>
                     </div>
+                    <i className="bi bi-emoji-sunglasses-fill hover-bg-laranja text-gray-900 mr-2 cursor-pointer" onClick={()=>router.push("/favEp/"+props.anime.id)} title='alter'></i>
+
                 </td>
+                
             ) : (
                 <td className="py-3 px-4">
                     <div className="text-gray-900">
@@ -76,6 +83,7 @@ export default function AnimeList(props) {
                 {userId ? (
                     <i className={starClass} onClick={toggleDestaque}></i>):(
                     <i className="bi bi-star text-gray-100"></i>
+                    
                     )
                 }
                 
