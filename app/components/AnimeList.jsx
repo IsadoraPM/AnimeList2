@@ -78,7 +78,7 @@ export default function AnimeList(props) {
                 </td>
             )}
             <td className="py-3 px-4">
-            <i className="bi bi-amd hover-bg-laranja text-gray-900 mr-2 cursor-pointer" onClick={()=>router.push('listFavEp?animeId=' +props.anime.id)} title='alter'></i>
+            <i className="bi bi-amd hover-bg-laranja text-gray-900 mr-2 cursor-pointer" onClick={()=>router.push('listFavEp/' +props.anime.id)} title='alter'></i>
 
                 <i className="bi bi-pencil-square hover-bg-laranja text-gray-900 mr-2 cursor-pointer" onClick={props.alter} title='alter'></i>
                 <i className="bi bi-calendar2-x hover-bg-laranja text-gray-900 cursor-pointer mr-2" onClick={() => deleteAnimes(props.anime.id)} title='Delete'></i>

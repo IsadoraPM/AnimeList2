@@ -3,16 +3,17 @@ import { useParams } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
-export default function AnimePage() {
+export default function AnimePage({params}) {
 
   const [favEpisodes, setFavEpisodes] = useState([]);
+
   
 
 
   useEffect(() => {
     async function loadFavEpisodes() {
       try {
-        const response = await fetch(`http://localhost:3004/favEp?animeId=${4}`);
+        const response = await fetch(`http://localhost:3004/favEp?animeId=${params?.id}`);
         if (response.ok) {
           const favEpisodesData = await response.json();
           setFavEpisodes(favEpisodesData);
@@ -26,14 +27,12 @@ export default function AnimePage() {
     }
 
     loadFavEpisodes();
-  }, [4]);
-
+  }, [params?.id]);
+  if (!favEpisodes) {
+    return <div>Carregando episódios...</div>;
+  }
   return (
     <div className="container mx-auto p-4">
-    <div>
-      {/* Seu código existente para exibir informações do anime aqui */}
-    </div>
-
     <div className="mt-4">
       <h2 className="text-2xl font-bold mb-4">Episódios Favoritos dos Usuários</h2>
       <ul>
