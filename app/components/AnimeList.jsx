@@ -27,15 +27,14 @@ export default function AnimeList(props) {
 
     const router = useRouter();
 
-    const { userId } = useContext(UserContext);
+    const { userId, isAdmin } = useContext(UserContext);
 
-    // Classe CSS condicional para a estrela com base em props.anime.destaque
-    const starClass = props.anime.destaque ? "bi-star text-laranja" : "bi-star text-gray-900";
+    console.log(isAdmin);
 
-    // Função para alternar a propriedade destaque
-    const toggleDestaque = () => {
-        props.handleStarClick(props.anime.id, !props.anime.destaque);
-    };
+    const starClass = props.anime.destaque ? "bi-star text-laranja cursor-pointer" : "bi-star text-gray-900 cursor-pointer";
+
+    
+
 
     return (
         <tr className="bg-gelo hover-bg-cinza200 transition-all ">
@@ -80,8 +79,8 @@ export default function AnimeList(props) {
             <td className="py-3 px-4">
                 <i className="bi bi-pencil-square hover-bg-laranja text-gray-900 mr-2 cursor-pointer" onClick={props.alter} title='alter'></i>
                 <i className="bi bi-calendar2-x hover-bg-laranja text-gray-900 cursor-pointer mr-2" onClick={() => deleteAnimes(props.anime.id)} title='Delete'></i>
-                {userId ? (
-                    <i className={starClass} onClick={toggleDestaque}></i>):(
+                {isAdmin ? (
+                    <i className={starClass} onClick={props.destacar}></i>):(
                     <i className="bi bi-star text-gray-100"></i>
                     
                     )

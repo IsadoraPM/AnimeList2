@@ -30,7 +30,9 @@ export default function Login () {
       console.log(user[0].username);
       console.log(user[0].id);
       changeName(user[0].username)
-      //changeAdmin(user[0].admin)
+      changeAdmin(user[0].admin)
+      
+      localStorage.setItem("user_logado", JSON.stringify({ id: user[0].id, username: user[0].username, isAdmin: user[0].isAdmin }))
       router.push('/')
     }  
    }
