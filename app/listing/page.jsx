@@ -59,7 +59,20 @@ export default function Listing() {
     }
     getAnimes();
   }
+
   
+  async function destacaanime(id, dest_atual) {
+    await fetch("http://localhost:3004/animes/" + id,
+      {
+        method: "PATCH",
+        headers: { "Content-type": "application/json" },
+        body: JSON.stringify({ destaque: !dest_atual })
+      })
+      const indiceAlterado = animes.findIndex(anime => anime.id == id)
+      const novosDados = [...animes]
+      novosDados[indiceAlterado].destaque = !dest_atual
+      setAnimes(novosDados)
+  }
 
   const listAnime = animes.map((anime) => (
     <AnimeList
@@ -68,6 +81,7 @@ export default function Listing() {
       delete={() => deleteAn(anime.id)}
       alter={() => router.push("alter/" + anime.id)}
       alterNote={() => router.push("alterNote/" + anime.id)}
+      destacar={() => destacaanime(anime.id, anime.destaque)}
     />
   ));
 
