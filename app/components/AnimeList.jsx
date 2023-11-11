@@ -81,7 +81,7 @@ export default function AnimeList(props) {
 
                 <i className="bi bi-pencil-square hover-bg-laranja text-gray-900 mr-2 cursor-pointer" onClick={props.alter} title='alter'></i>
                 <i className="bi bi-calendar2-x hover-bg-laranja text-gray-900 cursor-pointer mr-2" onClick={() => deleteAnimes(props.anime.id)} title='Delete'></i>
-                {isAdmin ? (
+                {userId ? (
                     <i className={starClass} onClick={props.destacar}></i>):(
                     <i className="bi bi-star text-gray-100"></i>
                     
