@@ -9,7 +9,7 @@ export default function Home() {
 
   useEffect(() => {
     async function getAnimes() {
-      const response = await fetch("http://localhost:3004/animes?destaque=true")
+      const response = await fetch("http://localhost:3004/animeApi/animes/")
       const dados = await response.json()
       setAnimes(dados)
     }

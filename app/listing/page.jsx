@@ -10,11 +10,11 @@ export default function Listing() {
 
   const router = useRouter();
 
-  //const router = useRouter()
   useEffect(() => {
     async function getAnimes() {
-      const response = await fetch("http://localhost:3004/animes");
+      const response = await fetch("http://localhost:3004/animeApi/animes");
       const data = await response.json();
+      console.log(data);
       setAnimes(data);
     }
     getAnimes();
@@ -22,24 +22,28 @@ export default function Listing() {
 
   useEffect(() => {
     async function getGeneros() {
-      const response = await fetch("http://localhost:3004/generos");
-      const dados = await response.json();
-      setGeneros(dados);
+      const response = await fetch("http://localhost:3004/animeApi/generos");
+      const data = await response.json();
+      console.log(data);
+      setGeneros(data);
     }
     getGeneros();
   }, []);
 
   async function deleteAn(id) {
-    const response = await fetch(`http://localhost:3004/animes/${id}`, {
-      method: "DELETE",
-    });
+    const response = await fetch(
+      `http://localhost:3004/animeApi/animes/${id}`,
+      {
+        method: "DELETE",
+      }
+    );
     setAnimes(animes.filter((anime) => anime.id !== id));
   }
 
   function filtrarAnime(data) {
     async function getAnimes() {
       const response = await fetch(
-        "http://localhost:3004/animes?titulo_like=" + data.pesq
+        "http://localhost:3004/animeApi/animes?titulo_like=" + data.pesq
       );
       console.log(response);
       const dados = await response.json();
@@ -59,9 +63,8 @@ export default function Listing() {
     }
     getAnimes();
   }
-  
 
-  const listAnime = animes.map((anime) => (
+  /*const listAnime = animes.map((anime) => (
     <AnimeList
       key={anime.id}
       anime={anime}
@@ -69,7 +72,7 @@ export default function Listing() {
       alter={() => router.push("alter/" + anime.id)}
       alterNote={() => router.push("alterNote/" + anime.id)}
     />
-  ));
+  ));*/
 
   return (
     <div>
@@ -103,7 +106,17 @@ export default function Listing() {
             </th>
           </tr>
         </thead>
-        <tbody>{listAnime}</tbody>
+        <tbody>
+          {animes.map((anime) => (
+            <AnimeList
+              key={anime.id}
+              anime={anime}
+              delete={() => deleteAn(anime.id)}
+              alter={() => router.push("alter/" + anime.id)}
+              alterNote={() => router.push("alterNote/" + anime.id)}
+            />
+          ))}
+        </tbody>
       </table>
     </div>
   );

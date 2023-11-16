@@ -17,7 +17,7 @@ const Alteracao = () => {
     async function carregarAnime() {
       try {
         const response = await fetch(
-          "http://localhost:3004/animes/" + params.id
+          "http://localhost:3004/animeApi/animes/" + params.id
         );
         if (response.ok) {
           const animeData = await response.json();
@@ -36,7 +36,7 @@ const Alteracao = () => {
 
     async function carregarGeneros() {
       try {
-        const response = await fetch("http://localhost:3004/generos");
+        const response = await fetch("http://localhost:3004/animeApi/generos");
         if (response.ok) {
           const generosData = await response.json();
           setGeneros(generosData);

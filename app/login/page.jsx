@@ -12,25 +12,47 @@ import { useRouter } from "next/navigation";
 export default function Login () {
 
   const {register, handleSubmit} = useForm();
-  const {changeId, changeName,changeAdmin} = useContext(UserContext)
+  const {changeId, changeName,changeRole, changeToken} = useContext(UserContext)
 
   const router = useRouter()
 
   async function verificaLogin(data) {
-      const login = `username=${data.username}&password=${data.senha}`
-      const response = await fetch(`http://localhost:3004/usuarios?${login}`)
+      //const login = `username=${data.username}&password=${data.senha}`
+      const response = await fetch(`http://localhost:3004/animeApi/login`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
     const user = await response.json()
+    if(response.status == 200){
+      localStorage.clear();
+      alert('Logado com sucesso')
+      localStorage.setItem('User Token', user.accessToken)
+      localStorage.setItem('User Id', user.id)
+      localStorage.setItem('User Name', user.user)
+      localStorage.setItem('User Role', user.role)
+    }
+    console.log(user);
+
+
     if(user.length == 0){
       alert('Usuário ou senha incorretos')
     }else{
-      changeId(user[0].id)
-      console.log(user[0].username);
-      console.log(user[0].id);
-      changeName(user[0].username)
-      changeAdmin(user[0].isAdmin)
-      console.log(user[0].isAdmin);
+      console.log('loguei');
+      console.log(user.user);
+      console.log(user.accessToken);
+      changeName(user.user)
+      changeRole(user.role)
+      changeToken(user.accessToken)
+      
 
-      router.push('/')
+      
+      console.log(user.role);
+
+    router.push('/')
     }  
    }
 
@@ -43,30 +65,30 @@ export default function Login () {
         <form onSubmit={handleSubmit(verificaLogin)}>
           <div className="mb-4">
             <label
-              htmlFor="nome"
+              htmlFor="email"
               className="block text-gray-800 text-sm font-bold mb-2"
             >
-              Username
+              Email
             </label>
             <input
               type="text"
-              id="nome"
+              id="email"
               className="border rounded w-full py-2 px-3 text-orange-500"
-              required {...register("username")}
+              required {...register("email")}
             />
           </div>
           <div className="mb-4">
             <label
-              htmlFor="senha"
+              htmlFor="password"
               className="block text-gray-800 text-sm font-bold mb-2"
             >
               Senha
             </label>
             <input
               type="password"
-              id="senha"
+              id="password"
               className="border rounded w-full py-2 px-3 text-orange-500"
-              required {...register("senha")}
+              required {...register("password")}
             />
           </div>
           <button

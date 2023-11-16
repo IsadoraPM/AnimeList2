@@ -16,7 +16,7 @@ const AlteracaoNota = () => {
     async function carregarAnime() {
       try {
         const response = await fetch(
-          "http://localhost:3004/animes/" + params.id
+          "http://localhost:3004/animeApi/animes/" + params.id
         );
         if (response.ok) {
           const animeData = await response.json();
