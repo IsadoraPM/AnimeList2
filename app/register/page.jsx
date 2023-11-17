@@ -13,7 +13,7 @@ const Cadastro = () => {
   useEffect(() => {
     async function carregarGeneros() {
       try {
-        const response = await fetch('http://localhost:3004/generos');
+        const response = await fetch('http://localhost:3004/animeApi/generos');
         if (response.ok) {
           const generosData = await response.json();
           setGeneros(generosData);
@@ -33,7 +33,7 @@ const Cadastro = () => {
     try {
       const dadosComGenero = { ...data, genero: selecionarGenero };
 
-      const response = await fetch('http://localhost:3004/animes', {
+      const response = await fetch('http://localhost:3004/animeApi/animes', {
         method: 'POST',
         headers: { 'Content-type': 'application/json' },
         body: JSON.stringify(dadosComGenero)

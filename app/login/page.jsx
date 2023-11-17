@@ -39,6 +39,7 @@ export default function Login () {
 
 
     if(user.length == 0){
+      localStorage.clear();
       alert('Usuário ou senha incorretos')
     }else{
       console.log('loguei');

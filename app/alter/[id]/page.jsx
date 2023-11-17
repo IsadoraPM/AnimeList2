@@ -17,7 +17,12 @@ const Alteracao = () => {
     async function carregarAnime() {
       try {
         const response = await fetch(
-          "http://localhost:3004/animeApi/animes/" + params.id
+          "http://localhost:3004/animeApi/animes/" + params.id,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("User Token")}`,
+            },
+          }
         );
         if (response.ok) {
           const animeData = await response.json();
@@ -36,7 +41,11 @@ const Alteracao = () => {
 
     async function carregarGeneros() {
       try {
-        const response = await fetch("http://localhost:3004/animeApi/generos");
+        const response = await fetch("http://localhost:3004/animeApi/generos",{
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("User Token")}`,
+          },
+        });
         if (response.ok) {
           const generosData = await response.json();
           setGeneros(generosData);
@@ -56,9 +65,10 @@ const Alteracao = () => {
   }, [params.id]);
 
   const enviaDados = async (data) => {
-    const anime = await fetch("http://localhost:3004/animes/" + params.id, {
+    const anime = await fetch("http://localhost:3004/animeApi/animes/" + params.id, {
       method: "PUT",
-      headers: { "Content-type": "application/json" },
+      headers: { "Content-type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("User Token")}` },
       body: JSON.stringify({ ...data }),
     });
     if (anime.status == 200) {
