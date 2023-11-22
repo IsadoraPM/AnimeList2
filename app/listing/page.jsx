@@ -7,6 +7,12 @@ import Pesq from "../components/Pesq";
 export default function Listing() {
   const [animes, setAnimes] = useState([]);
   const [generos, setGeneros] = useState([]);
+  const [userRole, setUserRole] = useState("");
+  useEffect(() => {
+    const storedUserRole = localStorage.getItem("User Role");
+    setUserRole(storedUserRole);
+  }, []);
+
 
   const router = useRouter();
 
@@ -101,9 +107,10 @@ export default function Listing() {
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               Nota
             </th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Ações
-            </th>
+            {userRole === "admin" && (
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Ações
+              </th>)}
           </tr>
         </thead>
         <tbody>
