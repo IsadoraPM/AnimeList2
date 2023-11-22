@@ -1,9 +1,13 @@
 'use client'
 import Link from "next/link";
+import { useContext } from "react";
+import { UserContext } from "../contexts/usuario";
 
 export default function Title({ children }) {
   const userName = localStorage.getItem('User Name');
   const userRole = localStorage.getItem('User Role');
+  const { user } = useContext(UserContext);
+  console.log(user);
   
   return (
     <body className="pagina-especifica">
@@ -26,7 +30,6 @@ export default function Title({ children }) {
             <i className="bi bi-collection-play"></i>
           </Link>
 
-          {/* Renderiza o link de cadastro apenas se a função do usuário for 'admin' */}
           {userRole === 'admin' && (
             <Link
               href="/register"
