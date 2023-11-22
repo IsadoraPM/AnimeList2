@@ -24,7 +24,9 @@ export default function AnimeList(props) {
     });
   }
 
-  const { userId,userRoles } = useContext(UserContext);
+  //const { userId,userRoles } = useContext(UserContext);
+  const userRoles = localStorage.getItem('User Role');
+
   console.log(userRoles);
 
   const starClass = props?.anime?.destaque
@@ -62,38 +64,50 @@ export default function AnimeList(props) {
       <td className="py-3 px-4">
         <div className="text-gray-900">{props?.anime?.episodios}</div>
       </td>
-      {userRoles == "commonUser" || userRoles == "admin"  ? (
+     {userRoles === "admin" ? (
+  <td className="py-3 px-4">
+    <div className="text-gray-900">
+      {props?.anime?.nota}
+      <i
+        className="bi bi-balloon-heart cursor-pointer"
+        onClick={props.alterNote}
+      ></i>
+    </div>
+  </td>
+) : userRoles === "commonUser" ? (
+  <td className="py-3 px-4">
+    <div className="text-gray-900">{props?.anime?.nota}</div>
+  </td>
+) : userRoles === "newUser" ? (
+  <td className="py-3 px-4">
+    <div className="text-gray-900">Valide sua conta para ver as notas</div>
+  </td>
+) : (
+  <td className="py-3 px-4">
+    <div className="text-gray-900">Faça login para ver as notas</div>
+  </td>
+)}
+  
+  {userRoles === "admin" ? (
         <td className="py-3 px-4">
-          <div className="text-gray-900">
-            {props?.anime?.nota}
-            <i
-              className="bi bi-balloon-heart cursor-pointer"
-              onClick={props.alterNote}
-            ></i>
-          </div>
+          <i
+            className="bi bi-pencil-square hover-bg-laranja text-gray-900 mr-2 cursor-pointer"
+            onClick={props.alter}
+            title="alter"
+          ></i>
+          <i
+            className="bi bi-calendar2-x hover-bg-laranja text-gray-900 cursor-pointer mr-2"
+            onClick={() => deleteAnimes(props.anime.id)}
+            title="Delete"
+          ></i>
+          <i className={starClass} onClick={toggleDestaque}></i>
         </td>
       ) : (
         <td className="py-3 px-4">
-          <div className="text-gray-900">Logue para ver as notas</div>
+       
+          <i className="bi bi-star text-gray-100"></i>
         </td>
       )}
-      <td className="py-3 px-4">
-        <i
-          className="bi bi-pencil-square hover-bg-laranja text-gray-900 mr-2 cursor-pointer"
-          onClick={props.alter}
-          title="alter"
-        ></i>
-        <i
-          className="bi bi-calendar2-x hover-bg-laranja text-gray-900 cursor-pointer mr-2"
-          onClick={() => deleteAnimes(props.anime.id)}
-          title="Delete"
-        ></i>
-        {userRoles == 'admin' ? (
-          <i className={starClass} onClick={toggleDestaque}></i>
-        ) : (
-          <i className="bi bi-star text-gray-100"></i>
-        )}
-      </td>
     </tr>
   );
 }
