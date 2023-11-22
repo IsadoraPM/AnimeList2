@@ -27,6 +27,7 @@ const Alteracao = () => {
         if (response.ok) {
           const animeData = await response.json();
           setAnime(animeData);
+          console.log(animeData);
           setSelectedGenre(animeData.genero);
         } else {
           toast.error("Erro ao carregar detalhes do anime.");
@@ -65,18 +66,37 @@ const Alteracao = () => {
   }, [params.id]);
 
   const enviaDados = async (data) => {
+   
+   try{
+    console.log(data);
+    const { titulo, temporadas, episodios, produtora, capa, nota, genero } = data;
+    const animeDTO = {
+      titulo,
+      temporadas: +temporadas,
+      episodios: +episodios,
+      produtora,
+      capa,
+      nota: +nota,
+      genero_id: +genero,
+    };
+
     const anime = await fetch("http://localhost:3004/animeApi/animes/" + params.id, {
       method: "PUT",
       headers: { "Content-type": "application/json",
       Authorization: `Bearer ${localStorage.getItem("User Token")}` },
-      body: JSON.stringify({ ...data }),
+      body: JSON.stringify({ ...animeDTO }),
     });
+    console.log(anime);
     if (anime.status == 200) {
       toast.success("Alterado com sucesso!");
     } else {
       toast.error("Erro ao fazer alteração!");
     }
-  };
+    
+   }catch(error){
+     console.error(error)
+  }
+  }
 
   return (
     <div className="container mx-auto mt-5 p-6 bg-gray-200 rounded-lg shadow-lg">
@@ -121,7 +141,7 @@ const Alteracao = () => {
                 Selecione o gênero
               </option>
               {generos.map((genero) => (
-                <option key={genero.id} value={genero.nome}>
+                <option key={genero.id} value={genero.id}>
                   {genero.nome}
                 </option>
               ))}
