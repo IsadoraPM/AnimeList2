@@ -27,16 +27,13 @@ export default function AnimeList(props) {
   //const { userId,userRoles } = useContext(UserContext);
   const userRoles = localStorage.getItem('User Role');
 
-  console.log(userRoles);
+  console.log('userRoles', userRoles);
 
   const starClass = props?.anime?.destaque
-    ? "bi-star text-laranja"
+    ? "bi-star text-laranja s"
     : "bi-star text-gray-900";
 
-  // Função para alternar a propriedade destaque
-  const toggleDestaque = () => {
-    props.handleStarClick(props?.anime?.id, !props.anime?.destaque);
-  };
+
 
   return (
     <tr className="bg-gelo hover-bg-cinza200 transition-all ">
@@ -97,10 +94,13 @@ export default function AnimeList(props) {
           ></i>
           <i
             className="bi bi-calendar2-x hover-bg-laranja text-gray-900 cursor-pointer mr-2"
-            onClick={() => deleteAnimes(props.anime.id)}
+            onClick={() => deleteAnimes(props?.anime?.id)}
             title="Delete"
           ></i>
-          <i className={starClass} onClick={toggleDestaque}></i>
+          <i className={starClass}
+          onClick={props.alterDestaque}
+          title="Destaque"
+          ></i>
         </td>
       ) : (
         <td className="py-3 px-4">

@@ -8,22 +8,21 @@ export default function Listing() {
   const [animes, setAnimes] = useState([]);
   const [generos, setGeneros] = useState([]);
   const [userRole, setUserRole] = useState("");
+  const router = useRouter();
+
+  async function getAllAnimes() {
+    const response = await fetch("http://localhost:3004/animeApi/animes");
+    const data = await response.json();
+    console.log(data);
+    setAnimes(data);
+  }
+
   useEffect(() => {
     const storedUserRole = localStorage.getItem("User Role");
     setUserRole(storedUserRole);
   }, []);
-
-
-  const router = useRouter();
-
   useEffect(() => {
-    async function getAnimes() {
-      const response = await fetch("http://localhost:3004/animeApi/animes");
-      const data = await response.json();
-      console.log(data);
-      setAnimes(data);
-    }
-    getAnimes();
+    getAllAnimes();
   }, []);
 
   useEffect(() => {
@@ -43,6 +42,7 @@ export default function Listing() {
         method: "DELETE",
       }
     );
+    console.log(response);
     setAnimes(animes.filter((anime) => anime.id !== id));
   }
 
@@ -70,15 +70,24 @@ export default function Listing() {
     getAnimes();
   }
 
-  /*const listAnime = animes.map((anime) => (
-    <AnimeList
-      key={anime.id}
-      anime={anime}
-      delete={() => deleteAn(anime.id)}
-      alter={() => router.push("alter/" + anime.id)}
-      alterNote={() => router.push("alterNote/" + anime.id)}
-    />
-  ));*/
+  async function alterarDestaque(id) {
+    try {
+      const response = await fetch(
+        "http://localhost:3004/animeApi/animes/destaque/" + id,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-type": "application/json; charset=UTF-8",
+          },
+        }
+      );
+      await response.json();
+      await getAllAnimes()
+    } catch (error) {
+      console.error('Catch', error)
+    }
+  }
+
 
   return (
     <div>
@@ -114,13 +123,14 @@ export default function Listing() {
           </tr>
         </thead>
         <tbody>
-          {animes.map((anime) => (
+          {animes?.map((anime) => (
             <AnimeList
               key={anime.id}
               anime={anime}
               delete={() => deleteAn(anime.id)}
               alter={() => router.push("alter/" + anime.id)}
               alterNote={() => router.push("alterNote/" + anime.id)}
+              alterDestaque={() => alterarDestaque(anime.id)}
             />
           ))}
         </tbody>
