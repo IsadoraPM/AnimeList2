@@ -4,16 +4,17 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import { useRouter } from "next/navigation";
 import AnimeList from "../components/AnimeList";
 import Pesq from "../components/Pesq";
+
 export default function Listing() {
   const [animes, setAnimes] = useState([]);
   const [generos, setGeneros] = useState([]);
   const [userRole, setUserRole] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
   const router = useRouter();
 
   async function getAllAnimes() {
     const response = await fetch("http://localhost:3004/animeApi/animes");
     const data = await response.json();
-    console.log(data);
     setAnimes(data);
   }
 
@@ -21,6 +22,7 @@ export default function Listing() {
     const storedUserRole = localStorage.getItem("User Role");
     setUserRole(storedUserRole);
   }, []);
+
   useEffect(() => {
     getAllAnimes();
   }, []);
@@ -29,7 +31,6 @@ export default function Listing() {
     async function getGeneros() {
       const response = await fetch("http://localhost:3004/animeApi/generos");
       const data = await response.json();
-      console.log(data);
       setGeneros(data);
     }
     getGeneros();
@@ -40,60 +41,62 @@ export default function Listing() {
       `http://localhost:3004/animeApi/animes/${id}`,
       {
         method: "DELETE",
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+          "Authorization": "Bearer " + localStorage.getItem("User Token"),
+        },
       }
     );
-    console.log(response);
     setAnimes(animes.filter((anime) => anime.id !== id));
   }
 
-  function filtrarAnime(data) {
-    async function getAnimes() {
+  async function filtrarAnime() {
+    if (searchTerm.trim() === "") {
+      getAllAnimes();
+      return;
+    }
+
+    try {
       const response = await fetch(
-        "http://localhost:3004/animeApi/animes?titulo_like=" + data.pesq
+        `http://localhost:3004/animeApi/animes?titulo_like=${searchTerm}`
       );
-      console.log(response);
       const dados = await response.json();
       setAnimes(dados);
+    } catch (error) {
+      console.error('Erro na filtragem:', error);
     }
-    getAnimes();
   }
 
   function ordenarNota() {
-    async function getAnimes() {
-      const response = await fetch(
-        "http://localhost:3004/animes?_sort=nota&_order=desc"
-      );
-      console.log(response);
-      const dados = await response.json();
-      setAnimes(dados);
-    }
-    getAnimes();
+    // Implemente a lógica de ordenar por nota
   }
 
   async function alterarDestaque(id) {
     try {
       const response = await fetch(
-        "http://localhost:3004/animeApi/animes/destaque/" + id,
+        `http://localhost:3004/animeApi/animes/destaque/${id}`,
         {
           method: "PATCH",
           headers: {
             "Content-type": "application/json; charset=UTF-8",
-            "Authorization": "Bearer " + localStorage.getItem("Token"),
-
+            "Authorization": "Bearer " + localStorage.getItem("User Token"),
           },
         }
       );
       await response.json();
-      await getAllAnimes()
+      await getAllAnimes();
     } catch (error) {
-      console.error('Catch', error)
+      console.error('Catch', error);
     }
   }
 
-
   return (
     <div>
-      <Pesq filtrarAnime={filtrarAnime} ordenarNota={ordenarNota} />
+<Pesq
+  filtrarAnime={filtrarAnime}
+  ordenarNota={ordenarNota}
+  handleSearchTermChange={(event) => setSearchTerm(event.target.value)}
+/>   
       <table className="min-w-full divide-y divide-gray-200 bg-fundo">
         <thead>
           <tr>

@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import Swal from "sweetalert2";
 import { UserContext } from "../contexts/usuario";
+import { useRouter } from "next/navigation";
 
 export default function AnimeList(props) {
   function deleteAnimes(id) {
@@ -23,6 +24,7 @@ export default function AnimeList(props) {
       }
     });
   }
+  const router = useRouter();
 
   //const { userId,userRoles } = useContext(UserContext);
   const userRoles = localStorage.getItem('User Role');
@@ -101,6 +103,10 @@ export default function AnimeList(props) {
           onClick={props.alterDestaque}
           title="Destaque"
           ></i>
+          <i className="bi bi-calendar2-x bg-green-800"
+            onClick={() => router.push("favoriteEpisode/" + props?.anime?.id) }
+          >
+          </i>
         </td>
       ) : (
         <td className="py-3 px-4">

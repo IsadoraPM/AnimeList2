@@ -11,11 +11,13 @@ export default function Home() {
     async function getAnimes() {
       const response = await fetch("http://localhost:3004/animeApi/animes/")
       const dados = await response.json()
+      console.log(dados);
       setAnimes(dados)
     }
     getAnimes()
   }, [])
   const animesReversos = [...animes].reverse();
+  console.log('anime reverso'+ animesReversos);
 
 
 
@@ -40,13 +42,14 @@ export default function Home() {
 
 
       <div className="container max-w-[90%] mx-auto mt-3">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-          {animesReversos.map((anime, index) => (
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+        {animesReversos
+          .filter((anime) => anime.destaque === true) // Filtra apenas os animes com destaque true
+          .map((anime, index) => (
             <ItemAnime key={anime.id} anime={anime} />
           ))}
-        </div>
       </div>
-
     </div>
+  </div>
   );
 }

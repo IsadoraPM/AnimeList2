@@ -1,14 +1,12 @@
 'use client'
 import Link from "next/link";
-import { useContext } from "react";
-import { UserContext } from "../contexts/usuario";
+
 
 export default function Title({ children }) {
+  const userId = localStorage.getItem('User Id');
   const userName = localStorage.getItem('User Name');
   const userRole = localStorage.getItem('User Role');
-  const { user } = useContext(UserContext);
-  console.log(user);
-  
+
   return (
     <body className="pagina-especifica">
       <header className="flex justify-between items-center bg-fundo py-2 px-6">
@@ -48,6 +46,18 @@ export default function Title({ children }) {
           >
             <i className="bi bi-buildings"></i>
           </Link>
+
+          {userId && (
+                      <Link
+                      href="/listAnimeEpFav"
+                      className="text-gray-200 text-2xl hover:text-laranja ml-4"
+                      alt="listAnimeEpFav"
+                      title="Listar Animes Favoritos"
+                    >
+                      <i className="bi bi-heart"></i>
+                    </Link>
+                    )}
+
 
           <div className="flex flex-col items-center ml-8">
             <Link href='/login'>
