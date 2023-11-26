@@ -1,109 +1,114 @@
 'use client'
 import Link from "next/link";
 import React, { useState } from "react";
+import { useForm } from "react-hook-form";
 import { FcGoogle } from 'react-icons/fc';
+import { ToastContainer, toast } from "react-toastify";
 
-export default function Cadastro() {
-  const [senha, setSenha] = useState("");
-  const [repetirSenha, setRepetirSenha] = useState("");
+
+const CadastroUsuario = () => {
+  const { register, handleSubmit, reset, watch } = useForm();
   const [senhaIncorreta, setSenhaIncorreta] = useState(false);
 
-  const handleCadastro = (e) => {
-    e.preventDefault();
+  const senha = watch('password');
+  const confirmaSenha = watch('confirmarSenha');
 
-    if (senha === repetirSenha) {
-     
-      console.log("Cadastro bem-sucedido!");
-      
-    } else {
-      // A senha não coincide, definimos o estado 'senhaIncorreta' como verdadeiro
-      setSenhaIncorreta(true);
+  const enviaDados = async (data) => {
+    try {
+      const response = await fetch('http://localhost:3004/animeApi/user', {
+        method: 'POST',
+        headers: { 'Content-type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+
+      if (response.status === 201) {
+        toast.success('Usuário cadastrado com sucesso!', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+        reset();
+      } else {
+        toast.error('Erro ao cadastrar usuário!', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      }
+    } catch (error) {
+      console.error('Erro ao cadastrar usuário:', error);
+      toast.error('Erro ao cadastrar usuário. Verifique o console para mais detalhes.', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     }
   };
 
+  const verificarSenha = () => {
+    setSenhaIncorreta(senha !== confirmaSenha);
+  };
+
   return (
-    <div className="flex flex-col items-center bg-fundo2 mt-20">
-      <div className="bg-gelo p-8 rounded-lg shadow-lg my-4 w-3/5">
-        <h2 className="text-2xl font-bold mb-4 text-orange-800">Cadastro</h2>
-        <form onSubmit={handleCadastro}>
-          <div className="mb-4">
-            <label
-              htmlFor="nome"
-              className="block text-gray-800 text-sm font-bold mb-2"
-            >
-              Nome
-            </label>
-            <input
-              type="text"
-              id="nome"
-              className="border rounded w-full py-2 px-3 text-orange-500"
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label
-              htmlFor="email"
-              className="block text-gray-800 text-sm font-bold mb-2"
-            >
-              E-mail
-            </label>
-            <input
-              type="email"
-              id="email"
-              className="border rounded w-full py-2 px-3 text-orange-500"
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label
-              htmlFor="senha"
-              className="block text-gray-800 text-sm font-bold mb-2"
-            >
-              Senha
-            </label>
-            <input
-              type="password"
-              id="senha"
-              className="border rounded w-full py-2 px-3 text-orange-500"
-              required
-              value={senha}
-              onChange={(e) => setSenha(e.target.value)}
-            />
-          </div>
-          <div className="mb-4">
-            <label
-              htmlFor="repetirSenha"
-              className="block text-gray-800 text-sm font-bold mb-2"
-            >
-              Repetir Senha
-            </label>
-            <input
-              type="password"
-              id="repetirSenha"
-              className="border rounded w-full py-2 px-3 text-orange-500"
-              required
-              value={repetirSenha}
-              onChange={(e) => setRepetirSenha(e.target.value)}
-            />
-          </div>
-          {senhaIncorreta && (
-            <p className="text-red-500 text-sm mb-2">As senhas não coincidem. Tente novamente.</p>
-          )}
-          <button
-            type="submit"
-            className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded mr-8 w-full"
-          >
-          
-            <Link href="/">Cadastrar</Link>
-          </button>
-        </form>
-        <p className="flex justify-center pt-4 text-orange-700 hover:text-orange-400">
-          Já possui uma conta? <Link href="/login">Faça login</Link>
-        </p>
-        <div className="flex justify-center pt-4">
-          <FcGoogle size={35} />
+    <div className="container mx-auto mt-5 p-6 bg-gray-200 rounded-lg shadow-lg">
+      <h2 className="text-2xl font-bold mb-4 text-gray-800">Cadastro de Usuários</h2>
+      <form onSubmit={handleSubmit(enviaDados)}>
+        <div className="mb-4">
+          <label htmlFor="nome" className="block text-gray-800 text-sm font-bold mb-2">Nome</label>
+          <input type="text" id="nome" {...register('name')} className="border rounded w-full py-2 px-3 text-orange-500" required />
         </div>
-      </div>
+
+        <div className="mb-4">
+          <label htmlFor="email" className="block text-gray-800 text-sm font-bold mb-2">E-mail</label>
+          <input type="email" id="email" {...register('email')} className="border rounded w-full py-2 px-3 text-orange-500" required />
+        </div>
+
+        <div className="mb-4">
+          <label htmlFor="senha" className="block text-gray-800 text-sm font-bold mb-2">Senha</label>
+          <input type="password" id="senha" {...register('password')} className="border rounded w-full py-2 px-3 text-orange-500" required />
+        </div>
+
+        <div className="mb-4">
+          <label htmlFor="confirmarSenha" className="block text-gray-800 text-sm font-bold mb-2">Confirmar Senha</label>
+          <input type="password" id="confirmarSenha" {...register('confirmarSenha')} className={`border rounded w-full py-2 px-3 text-orange-500 ${senhaIncorreta ? 'border-red-500' : ''}`} onBlur={verificarSenha} required />
+          {senhaIncorreta && (
+            <p className="text-red-500 text-sm mt-2">As senhas não coincidem. Tente novamente.</p>
+          )}
+        </div>
+
+        <button type="submit" className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded mr-3">
+          Enviar
+        </button>
+        <button type="button" onClick={() => reset()} className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded">
+          Limpar
+        </button>
+      </form>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
     </div>
   );
-}
+};
+
+export default CadastroUsuario;
