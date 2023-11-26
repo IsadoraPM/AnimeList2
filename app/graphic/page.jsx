@@ -3,29 +3,27 @@ import React, { useEffect, useState } from "react";
 import { Chart } from "react-google-charts";
 
 export default function AnimeChart() {
-  const [animesPorNota, setAnimesPorNota] = useState({});
+  const [episodesData, setEpisodesData] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch("http://localhost:3004/animes");
+        const response = await fetch("http://localhost:3004/animeApi/favorite-episode/popular", {
+          method: "GET",
+          headers: {
+            "Content-type": "application/json; charset=UTF-8",
+            "Authorization": "Bearer " + localStorage.getItem("User Token"),
+          },
+        });
+
         if (!response.ok) {
           throw new Error("Erro na solicitação à API");
         }
-        const animesData = await response.json();
 
-        const animesPorNota = {};
+        const episodesData = await response.json();
+        console.log(episodesData);
 
-        animesData.forEach((anime) => {
-          const notaAnime = anime.nota || "Sem Nota";
-          if (notaAnime in animesPorNota) {
-            animesPorNota[notaAnime]++;
-          } else {
-            animesPorNota[notaAnime] = 1;
-          }
-        });
-
-        setAnimesPorNota(animesPorNota);
+        setEpisodesData(episodesData);
       } catch (error) {
         console.error("Erro ao buscar dados da API:", error);
       }
@@ -38,20 +36,21 @@ export default function AnimeChart() {
     <div className="mt-10 p-6 bg-gelo rounded-lg shadow-lg">
       <div className="text-center mb-6">
         <h1 className="font-bold text-gray-800 text-2xl">
-          Gráfico de Animes por Nota
+          Gráfico de Episódios Mais Favoritados
         </h1>
       </div>
 
       <Chart
-        chartType="ColumnChart"
+        chartType="BarChart"
         width="100%"
         height="400px"
         data={[
-          ["Nota", "Quantidade", { role: "style" }],
-          ...Object.entries(animesPorNota).map(([nota, quantidade]) => [
-            nota,
-            quantidade,
-            pickColorByNota(nota),
+          ["Anime", "Episódio", "Quantidade de Favoritos", { role: "style" }],
+          ...episodesData.map((episode) => [
+            episode.animeTitulo,
+            parseInt(episode.favoriteEpisode_episode, 10), // Convertendo para número
+            parseInt(episode.userCount, 10), // Convertendo para número
+            pickColorByCount(parseInt(episode.userCount, 10)),
           ]),
         ]}
         options={{
@@ -61,7 +60,7 @@ export default function AnimeChart() {
             bold: true,
           },
           hAxis: {
-            title: "Nota",
+            title: "Anime e Episódio",
             titleTextStyle: {
               color: "#333",
               fontSize: 14,
@@ -71,7 +70,7 @@ export default function AnimeChart() {
             },
           },
           vAxis: {
-            title: "Quantidade",
+            title: "Quantidade de Favoritos",
             titleTextStyle: {
               color: "#333",
               fontSize: 14,
@@ -87,12 +86,8 @@ export default function AnimeChart() {
   );
 }
 
-function pickColorByNota(nota) {
-  const colorPalette = ["#4CAF50", "#2196F3", "#FFC107", "#FF5722"];
-
-  const notaFloat = parseFloat(nota);
-  if (notaFloat >= 4.5) return colorPalette[0];
-  if (notaFloat >= 3.5) return colorPalette[1];
-  if (notaFloat >= 2.5) return colorPalette[2];
-  return colorPalette[3];
+function pickColorByCount(count) {
+  // Defina sua lógica para escolher a cor com base na contagem
+  // Exemplo simples: escolher verde se mais de 5 favoritos, senão azul
+  return count > 5 ? "green" : "blue";
 }
