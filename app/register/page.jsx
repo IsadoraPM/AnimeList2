@@ -31,14 +31,32 @@ const Cadastro = () => {
 
   const enviaDados = async (data) => {
     try {
-      const dadosComGenero = { ...data, genero: selecionarGenero };
-
+      const generoSelecionado = generos.find((genero) => genero.nome === selecionarGenero);
+  
+      if (!generoSelecionado) {
+        console.error('Gênero não encontrado');
+        return;
+      }
+  
+      const dadosComGenero = {
+        ...data,
+        genero_id: generoSelecionado.id, 
+        temporadas: Number(data.temporadas),
+        episodios: Number(data.episodios),
+        nota: Number(data.nota),
+      };
+  
       const response = await fetch('http://localhost:3004/animeApi/animes', {
         method: 'POST',
-        headers: { 'Content-type': 'application/json' },
-        body: JSON.stringify(dadosComGenero)
+        headers: {
+          'Content-type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.getItem('User Token'),
+        },
+        body: JSON.stringify(dadosComGenero),
       });
-
+  
+      console.log('response', response);
+  
       if (response.status === 201) {
         toast.success('Anime cadastrado com sucesso!');
         reset();
@@ -51,6 +69,7 @@ const Cadastro = () => {
       toast.error('Erro ao cadastrar anime. Verifique o console para mais detalhes.');
     }
   };
+  
 
   return (
     <div className="container mx-auto mt-5 p-6 bg-gray-200 rounded-lg shadow-lg">
