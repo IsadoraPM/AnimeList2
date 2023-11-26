@@ -43,13 +43,13 @@ export default function AnimeChart() {
       <Chart
         chartType="BarChart"
         width="100%"
-        height="400px"
+        height="500px"
         data={[
           ["Anime", "Episódio", "Quantidade de Favoritos", { role: "style" }],
           ...episodesData.map((episode) => [
             episode.animeTitulo,
-            parseInt(episode.favoriteEpisode_episode, 10), // Convertendo para número
-            parseInt(episode.userCount, 10), // Convertendo para número
+            parseInt(episode.favoriteEpisode_episode, 10),
+            parseInt(episode.userCount, 10),
             pickColorByCount(parseInt(episode.userCount, 10)),
           ]),
         ]}
@@ -80,6 +80,8 @@ export default function AnimeChart() {
               color: "#333",
             },
           },
+          chartArea: { width: "70%", height: "70%" },
+          bar: { groupWidth: "60%" }, // Ajuste a largura das barras
         }}
       />
     </div>
@@ -88,6 +90,18 @@ export default function AnimeChart() {
 
 function pickColorByCount(count) {
   // Defina sua lógica para escolher a cor com base na contagem
-  // Exemplo simples: escolher verde se mais de 5 favoritos, senão azul
-  return count > 5 ? "green" : "blue";
+  // Aqui estão algumas cores diferentes, sinta-se à vontade para ajustar
+  if (count > 5) {
+    return "#4CAF50"; // verde
+  }
+
+  if (count >= 3 && count <= 5) {
+    return "#2196F3"; // azul
+  }
+
+  if (count >= 1 && count <= 2) {
+    return "#FFC107"; // amarelo
+  }
+
+  return "#FF5722"; // laranja
 }

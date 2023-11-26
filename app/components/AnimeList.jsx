@@ -35,8 +35,6 @@ export default function AnimeList(props) {
     ? "bi-star text-laranja s"
     : "bi-star text-gray-900";
 
-
-
   return (
     <tr className="bg-gelo hover-bg-cinza200 transition-all ">
       <td className="py-3 px-4">
@@ -63,31 +61,30 @@ export default function AnimeList(props) {
       <td className="py-3 px-4">
         <div className="text-gray-900">{props?.anime?.episodios}</div>
       </td>
-     {userRoles === "admin" ? (
-  <td className="py-3 px-4">
-    <div className="text-gray-900">
-      {props?.anime?.nota}
-      <i
-        className="bi bi-balloon-heart cursor-pointer"
-        onClick={props.alterNote}
-      ></i>
-    </div>
-  </td>
-) : userRoles === "commonUser" ? (
-  <td className="py-3 px-4">
-    <div className="text-gray-900">{props?.anime?.nota}</div>
-  </td>
-) : userRoles === "newUser" ? (
-  <td className="py-3 px-4">
-    <div className="text-gray-900">Valide sua conta para ver as notas</div>
-  </td>
-) : (
-  <td className="py-3 px-4">
-    <div className="text-gray-900">Faça login para ver as notas</div>
-  </td>
-)}
-  
-  {userRoles === "admin" ? (
+      {userRoles === "admin" ? (
+        <td className="py-3 px-4">
+          <div className="text-gray-900">
+            {props?.anime?.nota}
+            <i
+              className="bi bi-balloon-heart cursor-pointer"
+              onClick={props.alterNote}
+            ></i>
+          </div>
+        </td>
+      ) : userRoles === "commonUser" ? (
+        <td className="py-3 px-4">
+          <div className="text-gray-900">{props?.anime?.nota}</div>
+        </td>
+      ) : userRoles === "newUser" ? (
+        <td className="py-3 px-4">
+          <div className="text-gray-900">Valide sua conta para ver as notas</div>
+        </td>
+      ) : (
+        <td className="py-3 px-4">
+          <div className="text-gray-900">Faça login para ver as notas</div>
+        </td>
+      )}
+      {userRoles === "admin" ? (
         <td className="py-3 px-4">
           <i
             className="bi bi-pencil-square hover-bg-laranja text-gray-900 mr-2 cursor-pointer"
@@ -100,19 +97,26 @@ export default function AnimeList(props) {
             title="Delete"
           ></i>
           <i className={starClass}
-          onClick={props.alterDestaque}
-          title="Destaque"
+            onClick={props.alterDestaque}
+            title="Destaque"
           ></i>
+
+        </td>
+      ) : (
+        <td className="py-3 px-4">
+          <i className="bi bi-star text-gray-100"></i>
+        </td>
+      )}
+      {userRoles === "commonUser" || userRoles === "admin" ? (
+        <td>
           <i className="bi bi-calendar2-x bg-green-800"
-            onClick={() => router.push("favoriteEpisode/" + props?.anime?.id) }
+            onClick={() => router.push("favoriteEpisode/" + props?.anime?.id)}
+            title="Favoritos"
           >
           </i>
         </td>
       ) : (
-        <td className="py-3 px-4">
-       
-          <i className="bi bi-star text-gray-100"></i>
-        </td>
+        <td></td>
       )}
     </tr>
   );
