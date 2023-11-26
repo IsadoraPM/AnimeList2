@@ -11,7 +11,7 @@ export default function Title({ children }) {
     <body className="pagina-especifica">
       <header className="flex justify-between items-center bg-fundo py-2 px-6">
         <div className="flex items-center">
-          <img src="../logo.png" className="w-14 h-14 rounded-full" />
+          <img src="/logo.png" className="w-14 h-14 rounded-full" />
           <Link href="/">
             <h1 className="text-2xl font-semibold text-laranja ml-4">
               AnimeCom
@@ -48,24 +48,32 @@ export default function Title({ children }) {
           </Link>
 
           {userId && (
-                      <Link
-                      href="/listAnimeEpFav"
-                      className="text-gray-200 text-2xl hover:text-laranja ml-4"
-                      alt="listAnimeEpFav"
-                      title="Listar Animes Favoritos"
-                    >
-                      <i className="bi bi-heart"></i>
-                    </Link>
-                    )}
-
+            <Link
+              href="/listAnimeEpFav"
+              className="text-gray-200 text-2xl hover:text-laranja ml-4"
+              alt="listAnimeEpFav"
+              title="Listar Animes Favoritos"
+            >
+              <i className="bi bi-heart"></i>
+            </Link>
+          )}
 
           <div className="flex flex-col items-center ml-8">
-            <Link href='/login'>
-              <i className="bi bi-person-circle text-gray-200 text-2xl pt-2"></i>
-            </Link>
-            <p className="text-sm text-gray-200">
-              {userName ? userName : 'Login'}
-            </p>
+            {userId ? (
+              <Link href="/perfil">
+                <div className="flex flex-col items-center cursor-pointer">
+                  <i className="bi bi-person-circle text-gray-200 text-2xl pt-2"></i>
+                  <p className="text-sm text-gray-200">{userName || 'Login'}</p>
+                </div>
+              </Link>
+            ) : (
+              <Link href="/login">
+                <div className="flex flex-col items-center cursor-pointer">
+                  <i className="bi bi-person-circle text-gray-200 text-2xl pt-2"></i>
+                  <p className="text-sm text-gray-200">Login</p>
+                </div>
+              </Link>
+            )}
           </div>
         </div>
       </header>

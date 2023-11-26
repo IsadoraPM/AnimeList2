@@ -17,7 +17,6 @@ export default function Login () {
   const router = useRouter()
 
   async function verificaLogin(data) {
-      //const login = `username=${data.username}&password=${data.senha}`
       const response = await fetch(`http://localhost:3004/animeApi/login`,
       {
         method: 'POST',
@@ -27,6 +26,7 @@ export default function Login () {
         body: JSON.stringify(data)
       })
     const user = await response.json()
+    console.log(user);
     if(response.status == 200){
       localStorage.clear();
       alert('Logado com sucesso')
@@ -34,6 +34,7 @@ export default function Login () {
       localStorage.setItem('User Id', user.id)
       localStorage.setItem('User Name', user.user)
       localStorage.setItem('User Role', user.role)
+      localStorage.setItem('User Email', user.email)
     }
     console.log(user);
 
