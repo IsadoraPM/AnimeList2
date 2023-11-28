@@ -1,14 +1,13 @@
-'use client'
-import Link from "next/link";
-import React, { useState } from "react";
+'use client';
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { FcGoogle } from 'react-icons/fc';
 import { ToastContainer, toast } from "react-toastify";
-
+import { HiEye, HiEyeOff } from 'react-icons/hi';
 
 const CadastroUsuario = () => {
   const { register, handleSubmit, reset, watch } = useForm();
   const [senhaIncorreta, setSenhaIncorreta] = useState(false);
+  const [mostrarSenha, setMostrarSenha] = useState(false);
 
   const senha = watch('password');
   const confirmaSenha = watch('confirmarSenha');
@@ -77,7 +76,21 @@ const CadastroUsuario = () => {
 
         <div className="mb-4">
           <label htmlFor="senha" className="block text-gray-800 text-sm font-bold mb-2">Senha</label>
-          <input type="password" id="senha" {...register('password')} className="border rounded w-full py-2 px-3 text-orange-500" required />
+          <div className="relative">
+            <input
+              type={mostrarSenha ? "text" : "password"}
+              id="senha"
+              {...register('password')}
+              className="border rounded w-full py-2 px-3 text-orange-500"
+              required
+            />
+            <div
+              className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer"
+              onClick={() => setMostrarSenha(!mostrarSenha)}
+            >
+              {mostrarSenha ? <HiEye className="text-gray-500" /> : <HiEyeOff className="text-gray-500" />}
+            </div>
+          </div>
         </div>
 
         <div className="mb-4">

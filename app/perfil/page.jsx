@@ -43,9 +43,11 @@ export default function Perfil(props) {
       console.log(codigoValidacao);
 
       if (response.ok) {
-        toast.success('Código validado com sucesso!');
+        alert('Código validado com sucesso!');
+        localStorage.setItem('User Role', 'commonUser');
+        closeModal();
       } else {
-        toast.error('Código de validação inválido. Tente novamente.');
+        alert('Código inválido!');
       }
     } catch (error) {
       console.error('Erro ao validar código:', error);
@@ -55,13 +57,13 @@ export default function Perfil(props) {
 
 
   const logout = () => {
-    // Limpar o localStorage
+    localStorage.removeItem('User Id');
     localStorage.removeItem('User Token');
     localStorage.removeItem('User Name');
     localStorage.removeItem('User Email');
     localStorage.removeItem('User Role');
 
-    router.push('/login');
+    router.push('/');
 
     toast.success('Logout realizado com sucesso!');
   };
@@ -107,6 +109,7 @@ export default function Perfil(props) {
       </button>
 
       <button
+      className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded mt-4 mr-2"
         onClick={openModal}
       >
         validar Código
@@ -116,8 +119,9 @@ export default function Perfil(props) {
         isOpen={isModalOpen}
         onRequestClose={closeModal}
         contentLabel="Validar Código Modal"
+        className=""
       >
-        <h2>Validar Código</h2>
+        <h2 className="">Validar Código</h2>
         <label htmlFor="codigo">Código:</label>
         <input
           type="text"

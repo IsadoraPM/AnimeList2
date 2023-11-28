@@ -39,7 +39,7 @@ const AlteracaoNota = () => {
   const enviaDados = async () => {
     try {
       const response = await fetch(
-        `http://localhost:3004/animes/${params.id}`,
+        `http://localhost:3004/animeApi/animes/${params.id}`,
         {
           method: "PATCH",
           headers: { "Content-type": "application/json" },

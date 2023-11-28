@@ -35,11 +35,17 @@ export default function Login () {
       localStorage.setItem('User Name', user.user)
       localStorage.setItem('User Role', user.role)
       localStorage.setItem('User Email', user.email)
+      changeName(user.user)
+      changeRole(user.role)
+      changeToken(user.accessToken)
+    }else{
+      localStorage.clear();
+      alert('Usuário ou senha incorretos')
     }
     console.log(user);
 
 
-    if(user.length == 0){
+    /*if(user.length == 0){
       localStorage.clear();
       alert('Usuário ou senha incorretos')
     }else{
@@ -55,7 +61,7 @@ export default function Login () {
       console.log(user.role);
 
     router.push('/')
-    }  
+    }  */
    }
 
 
