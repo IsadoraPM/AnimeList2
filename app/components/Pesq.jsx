@@ -31,7 +31,7 @@ export default function Pesq(props) {
           {...register("pesq")}
           onChange={handleSearchTermChange}
         />
-        <button type="submit" className="bi bi-search text-white hover:text-laranja mr-4"></button>
+        <button type="submit" className="bi bi-search text-white hover:text-laranja mr-4 mx-2"></button>
         
         <button 
           type="button"

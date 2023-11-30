@@ -11,13 +11,11 @@ export default function Home() {
     async function getAnimes() {
       const response = await fetch("http://localhost:3004/animeApi/animes/")
       const dados = await response.json()
-      console.log(dados);
       setAnimes(dados)
     }
     getAnimes()
   }, [])
   const animesReversos = [...animes].reverse();
-  console.log('anime reverso'+ animesReversos);
 
 
 
@@ -28,13 +26,13 @@ export default function Home() {
         <img src="./jujutsu.png" alt="jujutsu" />
         <div className="absolute inset-0 flex items-center mx-4">
           <div className="flex flex-col items-start text-white">
-            <img src="./Jujutsu_Kaisen.png" alt="logoJujutsu" className="w-1/2 md:w-1/4 lg:w-1/6" />
-            <p className="text-sm md:text-base lg:text-lg">
+            <img src="./Jujutsu_Kaisen.png" alt="logoJujutsu" className="w-2/3 md:w-2/5 lg:w-2/6" />
+            <p className="text-sm md:text-base lg:text-lg" style={{ maxWidth: '34rem' }}>
               “Sofrimento, arrependimento, vergonha: os sentimentos negativos dos humanos tornam-se Maldições, causando terríveis acidentes que podem levar até mesmo à morte.
-               E pra piorar, Maldições só podem ser exorcizadas por outras Maldições. 
-               Certo dia, para salvar amigos que estavam sendo atacados por Maldições, 
-               Yuji Itadori engole o dedo do Ryomen-Sukuna, absorvendo sua Maldição. 
-               Ele então decide se matricular no Colégio Técnico de Feitiçaria de Tóquio, uma organização que combate as Maldições... e assim começa a heróica lenda do garoto que tornou-se uma Maldição para exorcizar uma Maldição.”
+              E pra piorar, Maldições só podem ser exorcizadas por outras Maldições.
+              Certo dia, para salvar amigos que estavam sendo atacados por Maldições,
+              Yuji Itadori engole o dedo do Ryomen-Sukuna, absorvendo sua Maldição.
+              Ele então decide se matricular no Colégio Técnico de Feitiçaria de Tóquio, uma organização que combate as Maldições... e assim começa a heróica lenda do garoto que tornou-se uma Maldição para exorcizar uma Maldição.”
             </p>
           </div>
         </div>
@@ -42,14 +40,16 @@ export default function Home() {
 
 
       <div className="container max-w-[90%] mx-auto mt-3">
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-        {animesReversos
-          .filter((anime) => anime.destaque === true) // Filtra apenas os animes com destaque true
-          .map((anime, index) => (
-            <ItemAnime key={anime.id} anime={anime} />
-          ))}
+        <h1 className="text-3xl text-gray-200 font-semibold mb-6 mt-8">Animes em Destaque</h1>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+          {animesReversos
+            .filter((anime) => anime.destaque === true) // Filtra apenas os animes com destaque true
+            .map((anime, index) => (
+              <ItemAnime key={anime.id} anime={anime} />
+            ))}
+        </div>
       </div>
+
     </div>
-  </div>
   );
 }

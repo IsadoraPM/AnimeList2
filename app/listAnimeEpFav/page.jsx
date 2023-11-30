@@ -40,11 +40,13 @@ export default function UserFavoriteAnimesPage() {
 
   return (
     <div>
-      <h1>Meus Animes Favoritos</h1>
+      <div className="container mx-2 mt-2">
+      <h1 className="text-2xl text-laranja font-semibold mb-6 mt-8">Meus Animes Favoritos</h1>
+      </div>
       {userFavorites.map((favorite) => (
         <AnimeListFav key={favorite.id} favoriteAnime={favorite}
         onDelete={deleteFavoriteEpisode} />
-      ))}
+        ))}
     </div>
   );
 };

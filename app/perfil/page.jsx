@@ -38,10 +38,6 @@ export default function Perfil(props) {
         body: JSON.stringify({ code: codigoValidacao })
       });
 
-      
-      console.log('response', response);
-      console.log(codigoValidacao);
-
       if (response.ok) {
         alert('Código validado com sucesso!');
         localStorage.setItem('User Role', 'commonUser');
@@ -54,7 +50,6 @@ export default function Perfil(props) {
       toast.error('Erro ao validar código. Verifique o console para mais detalhes.');
     }
   };
-
 
   const logout = () => {
     localStorage.removeItem('User Id');
@@ -69,6 +64,7 @@ export default function Perfil(props) {
   };
 
   async function enviaEmail() {
+    try {
       const response = await fetch(`http://localhost:3004/animeApi/user/email`, {
         method: 'POST',
         headers: {
@@ -77,60 +73,66 @@ export default function Perfil(props) {
         }
       });
       
-      
       alert('Código enviado por email com sucesso!');
-      
-      
-      const data = await response.json();
-  
+    } catch (error) {
+      console.error('Erro ao enviar código por email:', error);
+      toast.error('Erro ao enviar código por email. Verifique o console para mais detalhes.');
+    }
   }
 
   return (
-    <div className="mt-10 p-6 bg-gelo rounded-lg shadow-lg">
-      <div className="text-center mb-6">
-        <h1 className="font-bold text-gray-800 text-2xl">
-          Perfil
-        </h1>
-      </div>
-      <div className="flex flex-col">
-        <div className="flex flex-row">
-          <div className="flex flex-col">
-            <div className="text-gray-900">Nome: {userName}</div>
-            <div className="text-gray-900">Email: {userEmail}</div>
-            <div className="text-gray-900">Função: {userRole}</div>
+    <div className="min-h-screen flex flex-col items-center bg-fundo2 mt-20">
+      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+        <h1 className="font-bold text-gray-800 text-2xl mb-4 text-center">Perfil</h1>
+        <div className="flex flex-col space-y-2">
+          <div className="text-gray-900">
+            <span className="font-semibold">Nome:</span> {userName}
+          </div>
+          <div className="text-gray-900">
+            <span className="font-semibold">Email:</span> {userEmail}
+          </div>
+          <div className="text-gray-900">
+            <span className="font-semibold">Função:</span> {userRole}
           </div>
         </div>
+        <div className="flex justify-center mt-4">
+          <button
+            onClick={enviaEmail}
+            className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded mr-2"
+          >
+            Enviar Código por Email
+          </button>
+          <button
+            onClick={openModal}
+            className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded"
+          >
+            Validar Código
+          </button>
+        </div>
       </div>
-      <button
-        onClick={enviaEmail}
-        className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded mt-4 mr-2"
-      >
-        Enviar Código por Email
-      </button>
-
-      <button
-      className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded mt-4 mr-2"
-        onClick={openModal}
-      >
-        validar Código
-      </button>
-
       <ReactModal
         isOpen={isModalOpen}
         onRequestClose={closeModal}
         contentLabel="Validar Código Modal"
-        className=""
+        className="absolute inset-1/4 bg-gelo p-8 rounded-lg shadow-lg w-1/2"
       >
-        <h2 className="">Validar Código</h2>
-        <label htmlFor="codigo">Código:</label>
+        <h2 className="font-semibold text-gray-800 text-xl mb-4">Validar Código</h2>
+        <label htmlFor="codigo" className="block mb-2">Código:</label>
         <input
           type="text"
           id="codigo"
           value={codigoValidacao}
           onChange={handleCodigoChange}
+          className="border border-gray-300 rounded px-3 py-2 mb-4 w-full"
         />
-        <button onClick={handleValidarCodigo}>Validar Código</button>
-        <button onClick={closeModal}>Fechar</button>
+        <div className="flex justify-end">
+          <button onClick={handleValidarCodigo} className="bg-orange-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2">
+            Validar Código
+          </button>
+          <button onClick={closeModal} className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
+            Fechar
+          </button>
+        </div>
       </ReactModal>
       <button
         onClick={logout}

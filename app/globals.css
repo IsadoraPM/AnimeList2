@@ -1,30 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Patua+One&display=swap" rel="stylesheet');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+
+
+*{
+  font-family: 'Patua One';
+}
+
+
 body {
   background-color: #343434;
 }
-
-/* .foto_principal {
-  position: relative;
-  width: auto;
-  height: auto;
-}
-
-.foto_sobreposta {
-  position: absolute; 
-  top: 200px;
-  left: 100px;
-  width: 300px;
-  height: auto;
-}
-
-.texto-sobreposto {
-  position: absolute;
-  top: 80px;
-  left: auto;
-  color: white;
-  padding: 5px;
-  width: 450px;
-} */

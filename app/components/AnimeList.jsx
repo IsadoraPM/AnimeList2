@@ -36,7 +36,7 @@ export default function AnimeList(props) {
     : "bi-star text-gray-900";
 
   return (
-    <tr className="bg-gelo hover-bg-cinza200 transition-all ">
+    <tr className="bg-gelo hover-bg-cinza200 border transition-all">
       <td className="py-3 px-4">
         <div className="w-20 h-20 bg-gray-300 rounded-full overflow-hidden">
           <img
@@ -109,7 +109,7 @@ export default function AnimeList(props) {
       )}
       {userRoles === "commonUser" || userRoles === "admin" ? (
         <td>
-          <i className="bi bi-calendar2-x bg-green-800"
+          <i className="bi bi-bookmark-star"
             onClick={() => router.push("favoriteEpisode/" + props?.anime?.id)}
             title="Favoritos"
           >
